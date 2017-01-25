@@ -11,6 +11,18 @@
 
   <!-- inject:css -->
   <!-- endinject -->
+
+  <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+  <!--<script>
+    var socket = io.connect('http://localhost:9090');
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+    socket.on('update', function (data) {
+      console.log('update handled in index.html', data);
+    });
+  </script>-->
 </head>
 <body>
 

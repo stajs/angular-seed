@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Socket</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- inject:css -->
+  <!-- endinject -->
+
+  <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost:9090');
+    socket.on('news', function (data) {
+      console.log('Connected from socket.html');
+      socket.emit('my other event', { location: 'socket.html' });
+    });
+
+    setTimeout(function () {
+      console.log('Sending update event');
+      socket.emit('update', { location: 'socket.html', fromTimeout: true });}, 1000)
+  </script>
+</head> 
+<body>
+
+  <h1>socket.html</h1>
+  
+  
+
+</body>
+</html>

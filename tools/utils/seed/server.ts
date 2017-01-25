@@ -2,6 +2,8 @@ import * as express from 'express';
 import * as fallback from 'express-history-api-fallback';
 import * as openResource from 'open';
 import { resolve } from 'path';
+import * as http from 'http';
+import * as socketIo from 'socket.io';
 
 import * as codeChangeTool from './code_change_tools';
 import Config from '../../config';
@@ -73,4 +75,23 @@ export function serveProd() {
   server.listen(Config.PORT, () =>
     openResource('http://localhost:' + Config.PORT + Config.APP_BASE)
   );
+  
+  let httpServer = http.createServer();
+  httpServer.listen(9090);
+  let io = socketIo(httpServer);
+
+  console.log('httpServer: ' + httpServer);
+  console.log('io: ' + io);
+
+  io.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data: any) {
+      console.log('my other event', data);
+    });
+
+    socket.on('update', function (data: any) {
+      console.log('update', data);
+      socket.broadcast.emit('update', {doIt: true});
+    });
+  });
 };
